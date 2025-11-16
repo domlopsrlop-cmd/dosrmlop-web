@@ -2,156 +2,45 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>DOSRMLOP Fake Deepfake</title>
+<title>DOSRMLOP</title>
 <style>
 body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #1e1e2f, #4b0082);
-  color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-}
-
-.container {
-  background: rgba(0,0,0,0.7);
-  padding: 30px;
-  border-radius: 20px;
   text-align: center;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.5);
-  position: relative;
-}
-
-h1 { font-size: 2.5em; color: #ff6ec7; text-shadow: 2px 2px 8px #000; margin-bottom: 10px; }
-p { font-size: 1.2em; margin-bottom: 20px; color: #ddd; }
-
-input[type="file"] {
-  margin: 10px 0;
-  padding: 5px;
-  border-radius: 10px;
-  cursor: pointer;
+  background: #111;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  padding: 20px;
 }
 
 button {
+  padding: 10px 20px;
+  margin: 10px;
+  font-size: 16px;
+  cursor: pointer;
   background: linear-gradient(135deg, #ff6ec7, #845ec2);
   border: none;
-  border-radius: 50px;
-  padding: 15px 35px;
-  font-size: 1.2em;
+  border-radius: 10px;
   color: #fff;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-}
-button:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.5); }
-
-#preview {
-  max-width: 200px;
-  max-height: 200px;
-  border-radius: 15px;
-  display: none;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  z-index: 2;
-  opacity: 0.8;
-}
-
-#processing {
-  display: none;
-  margin-top: 20px;
-  font-size: 1.2em;
-  color: #ff6ec7;
-  animation: blink 1s infinite;
-}
-
-@keyframes blink {
-  0%, 50%, 100% { opacity: 1; }
-  25%, 75% { opacity: 0; }
-}
-
-#message {
-  margin-top: 15px;
-  color: #ff6ec7;
-  font-weight: bold;
 }
 
 video {
   max-width: 90%;
-  border-radius: 15px;
-  display: none;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+  margin-top: 20px;
+  border-radius: 10px;
 }
 </style>
 </head>
 <body>
 
-<div class="container">
-  <h1>DOSRMLOP</h1>
-  <p>Safe FOMM-style AI animation</p>
+<h1>DOSRMLOP</h1>
+<p>Safe FOMM-style AI animation</p>
 
-  <input type="file" id="imgUpload" accept="image/*"><br>
-  <button id="startBtn">Start Animation</button>
+<button onclick="document.getElementById('anim').style.display='block'">Start Animation</button>
 
-  <div id="processing">Processing AI animation...</div>
-  <p id="message"></p>
-
-  <video id="anim" controls>
-    <source src="video.mp4" type="video/mp4">
-  </video>
-  <img id="preview">
-</div>
-
-<script>
-const imgUpload = document.getElementById('imgUpload');
-const preview = document.getElementById('preview');
-const video = document.getElementById('anim');
-const startBtn = document.getElementById('startBtn');
-const processing = document.getElementById('processing');
-const message = document.getElementById('message');
-
-let uploadedImage = null;
-
-// Show uploaded image preview
-imgUpload.addEventListener('change', function(){
-  const file = this.files[0];
-  if(file){
-    uploadedImage = URL.createObjectURL(file);
-    preview.src = uploadedImage;
-    preview.style.display = 'block';
-    video.style.display = 'none';
-    processing.style.display = 'none';
-    message.textContent = '';
-  }
-});
-
-// Start fake deepfake animation
-startBtn.addEventListener('click', function(){
-  if(!uploadedImage){
-    message.textContent = 'Please upload an image first!';
-    return;
-  }
-
-  preview.style.display = 'block';
-  processing.style.display = 'block';
-  message.textContent = '';
-  video.style.display = 'none';
-
-  // Fake processing delay
-  setTimeout(() => {
-    processing.style.display = 'none';
-    video.style.display = 'block';
-    preview.style.display = 'block'; // overlay image
-    video.play().catch(() => {
-      message.textContent = "Tap the video to play if autoplay is blocked on your device.";
-    });
-  }, 3000); // 3 seconds processing
-});
-</script>
+<video id="anim" style="display:none;" controls autoplay>
+  <source src="https://raw.githubusercontent.com/domlopsrlop-cmd/dosrmlop-web/main/video.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 </body>
 </html>
