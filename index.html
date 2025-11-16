@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>DOSRMLOP</title>
 <style>
+/* Body & background */
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
@@ -12,26 +13,49 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
 }
+
+/* Card container */
 .container {
   background: rgba(0,0,0,0.7);
   padding: 30px;
   border-radius: 20px;
   text-align: center;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.5);
 }
-h1 { font-size: 2.5em; margin-bottom: 10px; color: #ff6ec7; text-shadow: 2px 2px 8px #000; }
+
+/* Title & subtitle */
+h1 { font-size: 2.5em; color: #ff6ec7; text-shadow: 2px 2px 8px #000; margin-bottom: 10px; }
 p { font-size: 1.2em; margin-bottom: 20px; color: #ddd; }
+
+/* Upload input */
+input[type="file"] {
+  margin: 10px 0;
+  padding: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* Button */
 button {
   background: linear-gradient(135deg, #ff6ec7, #845ec2);
-  border: none; border-radius: 50px;
-  padding: 15px 30px; font-size: 1.1em;
-  color: #fff; cursor: pointer; transition: all 0.3s;
+  border: none;
+  border-radius: 50px;
+  padding: 15px 35px;
+  font-size: 1.2em;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
   box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 button:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.5); }
-video { max-width: 90%; margin-top: 20px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.5); display: none; }
-img { max-width: 60%; margin-top: 20px; border-radius: 15px; }
+
+/* Image preview */
+img { max-width: 60%; margin-top: 20px; border-radius: 15px; display: none; }
+
+/* Video */
+video { max-width: 90%; margin-top: 20px; border-radius: 15px; display: none; box-shadow: 0 5px 20px rgba(0,0,0,0.5); }
 </style>
 </head>
 <body>
@@ -41,25 +65,25 @@ img { max-width: 60%; margin-top: 20px; border-radius: 15px; }
   <p>Safe FOMM-style AI animation</p>
 
   <!-- Upload Image -->
-  <input type="file" id="imgUpload" accept="image/*">
-  <br>
-  <img id="preview" src="" style="display:none;">
+  <input type="file" id="imgUpload" accept="image/*"><br>
+  <img id="preview">
   <br>
   <button id="startBtn">Start Animation</button>
 
   <!-- Video -->
-  <video id="anim" controls autoplay>
+  <video id="anim" controls>
     <source src="https://drive.google.com/uc?export=download&id=1dUsT1jeRFd3l5jKgwYg_X5IqfmlcEnM7" type="video/mp4">
   </video>
 </div>
 
 <script>
-// Preview uploaded image
+// Elements
 const imgUpload = document.getElementById('imgUpload');
 const preview = document.getElementById('preview');
 const video = document.getElementById('anim');
 const startBtn = document.getElementById('startBtn');
 
+// Preview uploaded image
 imgUpload.addEventListener('change', function(){
   const file = this.files[0];
   if(file){
@@ -69,11 +93,14 @@ imgUpload.addEventListener('change', function(){
   }
 });
 
-// Show video when Start Animation clicked
+// Start animation
 startBtn.addEventListener('click', function(){
   if(preview.src){
     preview.style.display = 'none';
     video.style.display = 'block';
+    video.play().catch(() => {
+      alert("Tap the video to play if autoplay is blocked on your device.");
+    });
   } else {
     alert('Please upload an image first!');
   }
