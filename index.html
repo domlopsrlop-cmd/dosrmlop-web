@@ -56,6 +56,27 @@ img { max-width: 60%; margin-top: 20px; border-radius: 15px; display: none; }
 
 /* Video */
 video { max-width: 90%; margin-top: 20px; border-radius: 15px; display: none; box-shadow: 0 5px 20px rgba(0,0,0,0.5); }
+
+/* Processing animation */
+#processing {
+  display: none;
+  margin-top: 20px;
+  font-size: 1.1em;
+  color: #ff6ec7;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 50%, 100% { opacity: 1; }
+  25%, 75% { opacity: 0; }
+}
+
+/* Inline message */
+#message {
+  margin-top: 15px;
+  color: #ff6ec7;
+  font-weight: bold;
+}
 </style>
 </head>
 <body>
@@ -70,6 +91,10 @@ video { max-width: 90%; margin-top: 20px; border-radius: 15px; display: none; bo
   <br>
   <button id="startBtn">Start Animation</button>
 
+  <!-- Processing message -->
+  <div id="processing">Processing AI animation...</div>
+  <p id="message"></p>
+
   <!-- Video -->
   <video id="anim" controls>
     <source src="https://drive.google.com/uc?export=download&id=1dUsT1jeRFd3l5jKgwYg_X5IqfmlcEnM7" type="video/mp4">
@@ -82,6 +107,8 @@ const imgUpload = document.getElementById('imgUpload');
 const preview = document.getElementById('preview');
 const video = document.getElementById('anim');
 const startBtn = document.getElementById('startBtn');
+const processing = document.getElementById('processing');
+const message = document.getElementById('message');
 
 // Preview uploaded image
 imgUpload.addEventListener('change', function(){
@@ -90,6 +117,8 @@ imgUpload.addEventListener('change', function(){
     preview.src = URL.createObjectURL(file);
     preview.style.display = 'block';
     video.style.display = 'none';
+    processing.style.display = 'none';
+    message.textContent = '';
   }
 });
 
@@ -97,12 +126,19 @@ imgUpload.addEventListener('change', function(){
 startBtn.addEventListener('click', function(){
   if(preview.src){
     preview.style.display = 'none';
-    video.style.display = 'block';
-    video.play().catch(() => {
-      alert("Tap the video to play if autoplay is blocked on your device.");
-    });
+    processing.style.display = 'block';
+    message.textContent = '';
+
+    // Fake AI processing delay
+    setTimeout(() => {
+      processing.style.display = 'none';
+      video.style.display = 'block';
+      video.play().catch(() => {
+        message.textContent = "Tap the video to play if autoplay is blocked on your device.";
+      });
+    }, 3000); // 3 seconds fake processing
   } else {
-    alert('Please upload an image first!');
+    message.textContent = 'Please upload an image first!';
   }
 });
 </script>
